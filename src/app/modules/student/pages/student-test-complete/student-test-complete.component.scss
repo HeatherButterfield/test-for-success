@@ -1,0 +1,50 @@
+.container {
+  height: 100%;
+  width: 100%;
+  background-image: url(/assets/icons/confetti.gif);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  display: flex;
+  position: absolute;
+  z-index: 3;
+  margin-left: 10%;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+img {
+  width: 200px;
+}
+
+button {
+  position: relative;
+  z-index: 4;
+  font-size: 1.5em;
+  padding: .5em 1em;
+  display: block;
+  float: right;
+  margin-top: 2%;
+  margin-right: 5%;
+}
+
+#words {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    margin-left: 4%;
+  }
+  h1 {
+    font-size: 3.5em;
+  }
+  img {
+    width: 175px;
+  }
+}

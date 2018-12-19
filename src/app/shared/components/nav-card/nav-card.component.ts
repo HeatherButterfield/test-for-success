@@ -1,26 +1,36 @@
 import {Component, Input, OnInit} from '@angular/core';
 
+export enum NavCardLoadState {
+  loading, complete
+}
+
 @Component({
   selector: 'letters-nav-card',
   templateUrl: './nav-card.component.html',
   styleUrls: ['./nav-card.component.scss']
 })
 export class NavCardComponent implements OnInit {
-  render: boolean;
-
+  public loadStates = NavCardLoadState;
   @Input()
   title: string;
-
   @Input()
   buttonText = 'Go';
-
   @Input()
   linkTo: string | Array<string> = '';
-
   @Input()
   imgSrc: string;
+  @Input()
+  loadState: NavCardLoadState;
+  @Input()
+  loadingMessage: string;
 
   constructor() {
+  }
+
+  _render: boolean;
+
+  get render(): boolean {
+    return this._render;
   }
 
   ngOnInit() {
@@ -40,7 +50,11 @@ export class NavCardComponent implements OnInit {
    * sets the render state respectively
    */
   validateFields(): boolean {
-    return this.render = !!this.buttonText && (!this.linkToIsNullOrEmpty() || !this.titleIsNull());
+    const retVal = !!this.buttonText &&
+      (!this.linkToIsNullOrEmpty() || !this.titleIsNull()) &&
+      this.imageXorLoading();
+    setTimeout(() => this._render = retVal, 0);
+    return retVal;
   }
 
   /**
@@ -75,5 +89,13 @@ export class NavCardComponent implements OnInit {
       console.error('NavCard.title attribute must not be null.');
     }
     return !this.title;
+  }
+
+  imageXorLoading(): boolean {
+    if (this.loadState != null && !!this.imgSrc) {
+      return false;
+    } else {
+      return this.loadState != null || !!this.imgSrc;
+    }
   }
 }
